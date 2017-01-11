@@ -1,0 +1,17 @@
+[package]
+name = "bus1"
+version = "0.0.1"
+authors = ["Timothée Ravier <tim@siosm.fr>"]
+description = "Wrapper around the bus1 IPC for Linux"
+documentation = "FIXME"
+homepage = "FIXME"
+repository = "https://github.com/bus1-rust/bus1-rs"
+readme = "README.md"
+keywords = ["bus1", "ipc", "linux"]
+license = "MIT"
+
+[dependencies]
+libc = "0.2"
+log = "*"
+env_logger = "*"
+ioctl = "*"
