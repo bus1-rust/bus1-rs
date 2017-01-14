@@ -12,6 +12,6 @@ license = "MIT"
 
 [dependencies]
 libc = "0.2"
-log = "*"
-env_logger = "*"
-ioctl = "*"
+log = "0.3"
+env_logger = "0.3"
+ioctl = "0.3"
