@@ -14,41 +14,40 @@ use ffi::*;
 #[repr(C)]
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Handle {
-    handle: u64,
+    handle: HandleFlags,
 }
 
 impl Handle {
     pub fn new(h: u64) -> Handle {
-        debug!("New Handle({}) created from u64", h);
-        Handle { handle: h }
+        h.into()
     }
 
     pub fn to_u64(&self) -> u64 {
-        self.handle
+        self.handle.bits()
     }
 
     pub fn is_valid(&self) -> bool {
-        self.handle != BUS1_HANDLE_INVALID
+        ! self.handle.is_all()
     }
 
     pub fn is_remote(&self) -> bool {
-        self.handle & BUS1_HANDLE_FLAG::BUS1_HANDLE_FLAG_REMOTE as u64 != 0
+        self.handle.contains(HANDLE_FLAG_REMOTE)
     }
 
     pub fn is_managed(&self) -> bool {
-        self.handle & BUS1_HANDLE_FLAG::BUS1_HANDLE_FLAG_MANAGED as u64 != 0
+        self.handle.contains(HANDLE_FLAG_MANAGED)
     }
 }
 
 impl From<u64> for Handle {
-    fn from (h: u64) -> Handle {
+    fn from(h: u64) -> Handle {
         debug!("New Handle({}) created from u64", h);
-        Handle { handle: h }
+        Handle { handle: HandleFlags::from_bits_truncate(h) }
     }
 }
 
 impl Display for Handle {
     fn fmt(&self, f: &mut Formatter) -> Result<(), Error> {
-        write!(f, "Handle({})", self.handle)
+        write!(f, "Handle({})", self.to_u64())
     }
 }

@@ -318,7 +318,7 @@ fn unicast()
 
     let message = peer.recv().unwrap();
     // assert!(message.type_() == BUS1_MSG::BUS1_MSG_DATA);
-    assert!(message.flags() == 0);
+    assert!(message.flags().is_empty());
     assert!(message.destination() == node1);
 
     /* queue must be empty now */
@@ -360,7 +360,7 @@ fn msg_local_handle_id() {
 
     let message = peer3.recv().unwrap();
     // assert!(message.type_() == BUS1_MSG::BUS1_MSG_DATA);
-    assert!(message.flags() == 0);
+    assert!(message.flags().is_empty());
     assert!(message.destination() == node1);
 
     /* import a handle from @peer3 into @peer5 */
@@ -385,7 +385,7 @@ fn msg_local_handle_id() {
 
     let message = peer3.recv().unwrap();
     // assert!(message.type_() == BUS1_MSG::BUS1_MSG_DATA);
-    assert!(message.flags() == 0);
+    assert!(message.flags().is_empty());
     assert!(message.destination() == node2);
 
     /* cleanup */
@@ -550,4 +550,24 @@ fn handle()
 	// /* cleanup */
 
 	// test_close(fd1, map1, n_map1);
+}
+
+#[test]
+fn handle_flags() {
+    use std::u64;
+
+    let h = Handle::from(u64::MAX);
+    assert!(!h.is_valid());
+
+    let h = Handle::from(3);
+    assert!(h.is_valid());
+    assert!(h.is_remote());
+    assert!(h.is_managed());
+
+    let id = 0x990;
+    let h = Handle::from(id);
+    assert!(h.is_valid());
+    assert!(!h.is_remote());
+    assert!(!h.is_managed());
+    assert_eq!(id, h.to_u64());
 }

@@ -21,35 +21,33 @@ pub const BUS1_OFFSET_INVALID: u64 = u64::MAX;
 
 pub const BUS1_DEFAULT_POOL_SIZE: u64 = 1024 * 1024 * 32;
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum BUS1_HANDLE_FLAG {
-    BUS1_HANDLE_FLAG_MANAGED = 1 << 0,
-    BUS1_HANDLE_FLAG_REMOTE = 1 << 1,
+bitflags! {
+    pub flags HandleFlags: u64 {
+        const HANDLE_FLAG_MANAGED = 1 << 0,
+        const HANDLE_FLAG_REMOTE = 1 << 1,
+        const HANDLE_FLAG_ID = !(HANDLE_FLAG_MANAGED.bits & HANDLE_FLAG_REMOTE.bits),
+    }
 }
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum BUS1_PEER_FLAG {
-    BUS1_PEER_FLAG_WANT_SECCTX = 1 << 0,
+bitflags! {
+    pub flags PeerFlags: u64 {
+        const PEER_FLAG_WANT_SECCTX = 1 << 0,
+    }
 }
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum BUS1_PEER_RESET_FLAG {
-    BUS1_PEER_RESET_FLAG_FLUSH = 1 << 0,
-    BUS1_PEER_RESET_FLAG_FLUSH_SEED = 1 << 1,
+bitflags! {
+    pub flags PeerResetFlags: u64 {
+        const PEER_RESET_FLAG_FLUSH = 1 << 0,
+        const PEER_RESET_FLAG_FLUSH_SEED = 1 << 1,
+    }
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[derive(Debug)]
 pub struct bus1_cmd_peer_reset {
-    pub flags: u64,
-    pub peer_flags: u64,
+    pub flags: PeerResetFlags,
+    pub peer_flags: PeerFlags,
     pub max_slices: u32,
     pub max_handles: u32,
     pub max_inflight_bytes: u32,
@@ -76,18 +74,17 @@ impl ::std::default::Default for bus1_cmd_handle_transfer {
     fn default() -> Self { unsafe { ::std::mem::zeroed() } }
 }
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum BUS1_NODES_DESTROY_FLAG {
-    BUS1_NODES_DESTROY_FLAG_RELEASE_HANDLES = 1 << 0,
+bitflags! {
+    pub flags NodesDestroyFlags: u64 {
+        const NODES_DESTROY_FLAG_RELEASE_HANDLES = 1 << 0,
+    }
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[derive(Debug)]
 pub struct bus1_cmd_nodes_destroy {
-    pub flags: u64,
+    pub flags: NodesDestroyFlags,
     pub ptr_nodes: u64,
     pub n_nodes: u64,
 }
@@ -97,19 +94,18 @@ impl ::std::default::Default for bus1_cmd_nodes_destroy {
     fn default() -> Self { unsafe { ::std::mem::zeroed() } }
 }
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum BUS1_SEND_FLAG {
-    BUS1_SEND_FLAG_CONTINUE = 1 << 0,
-    BUS1_SEND_FLAG_SEED = 1 << 1,
+bitflags! {
+    pub flags SendFlags: u64 {
+        const SEND_FLAG_CONTINUE = 1 << 0,
+        const SEND_FLAG_SEED = 1 << 1,
+    }
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[derive(Debug)]
 pub struct bus1_cmd_send {
-    pub flags: u64,
+    pub flags: SendFlags,
     pub ptr_destinations: *mut u64,
     pub ptr_errors: *mut u64,
     pub n_destinations: u64,
@@ -126,13 +122,12 @@ impl ::std::default::Default for bus1_cmd_send {
     fn default() -> Self { unsafe { ::std::mem::zeroed() } }
 }
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum EBUS1_RECV_FLAG {
-    BUS1_RECV_FLAG_PEEK = 1 << 0,
-    BUS1_RECV_FLAG_SEED = 1 << 1,
-    BUS1_RECV_FLAG_INSTALL_FDS = 1 << 2,
+bitflags! {
+    pub flags RecvFlags: u64 {
+        const RECV_FLAG_PEEK = 1 << 0,
+        const RECV_FLAG_SEED = 1 << 1,
+        const RECV_FLAG_INSTALL_FDS = 1 << 2,
+    }
 }
 
 #[derive(Copy, Clone)]
@@ -145,12 +140,11 @@ pub enum BUS1_MSG {
     BUS1_MSG_NODE_RELEASE = 3,
 }
 
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
-pub enum BUS1_MSG_FLAG {
-    BUS1_MSG_FLAG_HAS_SECCTX = 1,
-    BUS1_MSG_FLAG_CONTINUE = 2,
+bitflags! {
+    pub flags MsgFlags: u64 {
+        const MSG_FLAG_HAS_SECCTX = 1,
+        const MSG_FLAG_CONTINUE = 2,
+    }
 }
 
 #[repr(C)]
@@ -172,7 +166,7 @@ impl ::std::default::Default for bus1_cmd_recv {
 pub struct bus1_msg {
     // The underscore is required here as 'type' is a Rust keyword
     pub type_: u64,
-    pub flags: u64,
+    pub flags: MsgFlags,
     pub destination: u64,
     pub uid: u32,
     pub gid: u32,
