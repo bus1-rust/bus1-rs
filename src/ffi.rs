@@ -7,7 +7,6 @@
 // except according to those terms.
 
 #![allow(dead_code,
-         non_camel_case_types,
          non_upper_case_globals,
          non_snake_case)]
 
@@ -131,13 +130,13 @@ bitflags! {
 }
 
 #[derive(Copy, Clone)]
-#[repr(u32)]
 #[derive(Debug)]
-pub enum BUS1_MSG {
-    BUS1_MSG_NONE = 0,
-    BUS1_MSG_DATA = 1,
-    BUS1_MSG_NODE_DESTROY = 2,
-    BUS1_MSG_NODE_RELEASE = 3,
+#[repr(u64)]
+pub enum Msg {
+    None = 0,
+    Data = 1,
+    NodeDestroy = 2,
+    NodeRelease = 3,
 }
 
 bitflags! {

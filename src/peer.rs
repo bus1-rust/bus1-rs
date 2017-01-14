@@ -108,9 +108,9 @@ impl Peer {
                 return Err(Error::last_os_error());
             }
             // FIXME? libbus1: if recv_msg.n_dropped ?
-            if recv.msg.type_ != BUS1_MSG::BUS1_MSG_DATA as u64 &&
-                recv.msg.type_ != BUS1_MSG::BUS1_MSG_NODE_DESTROY as u64 &&
-                recv.msg.type_ != BUS1_MSG::BUS1_MSG_NODE_RELEASE as u64 {
+            if recv.msg.type_ != Msg::Data as u64 &&
+                recv.msg.type_ != Msg::NodeDestroy as u64 &&
+                recv.msg.type_ != Msg::NodeRelease as u64 {
                 return Err(Error::new(ErrorKind::Invalid));
             }
             debug!("{}: received a message", self);
