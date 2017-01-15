@@ -31,11 +31,11 @@ impl Handle {
     }
 
     pub fn is_remote(&self) -> bool {
-        self.handle.contains(HANDLE_FLAG_REMOTE)
+        self.is_valid() && self.handle.contains(HANDLE_FLAG_REMOTE)
     }
 
     pub fn is_managed(&self) -> bool {
-        self.handle.contains(HANDLE_FLAG_MANAGED)
+        self.is_valid() && self.handle.contains(HANDLE_FLAG_MANAGED)
     }
 }
 

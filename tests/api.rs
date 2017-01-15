@@ -558,6 +558,9 @@ fn handle_flags() {
 
     let h = Handle::from(u64::MAX);
     assert!(!h.is_valid());
+    assert!(!h.is_remote());
+    assert!(!h.is_managed());
+    assert_eq!(u64::MAX, h.to_u64());
 
     let h = Handle::from(3);
     assert!(h.is_valid());
