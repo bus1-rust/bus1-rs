@@ -95,4 +95,5 @@ $ RUST_LOG="bus1=debug" cargo run
 
 ## License
 
-Licensed under the MIT license, see LICENSE.
+Licensed under the terms of both the MIT license and the Apache License
+(Version 2.0).
