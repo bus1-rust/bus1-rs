@@ -19,7 +19,7 @@ pub struct Error {
 
 pub type Result<T> = result::Result<T, Error>;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub enum ErrorKind {
     NoMessageReady,
     InvalidFileDesc,
@@ -41,6 +41,10 @@ pub enum ErrorKind {
 impl Error {
     pub fn new(k: ErrorKind) -> Error {
         Error { kind: k }
+    }
+
+    pub fn kind(&self) -> ErrorKind {
+        self.kind
     }
 
     pub fn last_os_error() -> Error {

@@ -323,13 +323,8 @@ fn unicast()
 
     /* queue must be empty now */
 
-    // TODO
-    // cmd_recv = (struct bus1_cmd_recv){
-    // 	.flags = 0,
-    // 	.max_offset = n_map1,
-    // };
-    // r = bus1_ioctl_recv(fd1, &cmd_recv);
-    // assert(r == -EAGAIN);
+    let err = peer.recv().unwrap_err();
+    assert!(err.kind() == ErrorKind::NoMessageReady);
 
     /* cleanup */
 }
