@@ -11,8 +11,7 @@ The currently exposed API is incomplete and probably not safe.
 Tested inside a Fedora 24 virtual machine with a 4.8 Linux kernel.
 
 ```
-$ git clone https://github.com/bus1-rust/bus1.git
-$ git checkout fix-local-handle-id
+$ git clone https://github.com/bus1/bus1.git
 $ cd bus1
 $ make
 $ sudo insmod ipc/bus1/bus1.ko
