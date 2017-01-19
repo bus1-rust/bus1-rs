@@ -69,10 +69,15 @@ impl MessageBuilder {
         cmd_send.ptr_destinations = self.destination_handles.as_mut_ptr() as *mut u64;
         cmd_send.n_destinations = self.destination_handles.len() as u64;
 
-        cmd_send.ptr_handles = self.handles.as_mut_ptr() as *mut u64;
-        cmd_send.n_handles = self.handles.len() as u64;
+        if self.handles.len() != 0 {
+            cmd_send.ptr_handles = self.handles.as_mut_ptr() as *mut u64;
+            cmd_send.n_handles = self.handles.len() as u64;
+        }
 
-        // TODO: fds
+        if self.fds.len() != 0 {
+            // TODO
+            unimplemented!();
+        }
 
         // TODO: data
         // if data.len() != 0 {
