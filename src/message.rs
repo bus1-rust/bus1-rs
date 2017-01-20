@@ -48,7 +48,7 @@ impl<'a> Message<'a> {
         self.msg.type_
     }
 
-    pub fn flags(&self) -> u64 {
+    pub fn flags(&self) -> MsgFlags {
         self.msg.flags
     }
 
