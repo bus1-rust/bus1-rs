@@ -32,13 +32,6 @@ pub enum BUS1_HANDLE_FLAG {
 #[derive(Copy, Clone)]
 #[repr(u32)]
 #[derive(Debug)]
-pub enum BUS1_PEER_FLAG {
-    BUS1_PEER_FLAG_WANT_SECCTX = 1 << 0,
-}
-
-#[derive(Copy, Clone)]
-#[repr(u32)]
-#[derive(Debug)]
 pub enum BUS1_PEER_RESET_FLAG {
     BUS1_PEER_RESET_FLAG_FLUSH = 1 << 0,
     BUS1_PEER_RESET_FLAG_FLUSH_SEED = 1 << 1,
@@ -130,9 +123,8 @@ impl ::std::default::Default for bus1_cmd_send {
 #[repr(u32)]
 #[derive(Debug)]
 pub enum EBUS1_RECV_FLAG {
-    BUS1_RECV_FLAG_PEEK = 1 << 0,
-    BUS1_RECV_FLAG_SEED = 1 << 1,
-    BUS1_RECV_FLAG_INSTALL_FDS = 1 << 2,
+    BUS1_RECV_FLAG_SEED = 1 << 0,
+    BUS1_RECV_FLAG_INSTALL_FDS = 1 << 1,
 }
 
 #[derive(Copy, Clone)]
@@ -149,8 +141,7 @@ pub enum BUS1_MSG {
 #[repr(u32)]
 #[derive(Debug)]
 pub enum BUS1_MSG_FLAG {
-    BUS1_MSG_FLAG_HAS_SECCTX = 1,
-    BUS1_MSG_FLAG_CONTINUE = 2,
+    BUS1_MSG_FLAG_CONTINUE = 1 << 0,
 }
 
 #[repr(C)]
@@ -174,15 +165,10 @@ pub struct bus1_msg {
     pub type_: u64,
     pub flags: u64,
     pub destination: u64,
-    pub uid: u32,
-    pub gid: u32,
-    pub pid: u32,
-    pub tid: u32,
     pub offset: u64,
     pub n_bytes: u64,
     pub n_handles: u64,
     pub n_fds: u64,
-    pub n_secctx: u64,
 }
 // FIXME? __attribute__((__aligned__(8)));
 

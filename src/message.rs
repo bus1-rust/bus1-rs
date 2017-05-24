@@ -35,8 +35,8 @@ pub struct Message<'a> {
 
 impl<'a> Message<'a> {
     pub fn new(msg: bus1_msg, fd: c_int, handles: &'a [u64],) -> Message<'a> {
-        debug!("New message received on handle: {}, from {}({}) {}:{}, offset: {}, n_bytes: {}, n_handles: {}, n_fds: {}",
-               msg.destination, msg.pid, msg.tid, msg.uid, msg.gid, msg.offset, msg.n_bytes, msg.n_handles, msg.n_fds);
+        debug!("New message received on handle: {}, offset: {}, n_bytes: {}, n_handles: {}, n_fds: {}",
+               msg.destination, msg.offset, msg.n_bytes, msg.n_handles, msg.n_fds);
         Message {
             msg: msg,
             peer_fd: fd,
