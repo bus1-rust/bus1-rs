@@ -64,7 +64,7 @@
 
 extern crate libc;
 #[macro_use] extern crate log;
-#[macro_use] extern crate ioctl;
+#[macro_use] extern crate ioctl_sys;
 
 pub use error::*;
 pub use handle::*;
