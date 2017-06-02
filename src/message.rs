@@ -13,6 +13,7 @@ use ffi::*;
 use handle::Handle;
 use error::Error;
 
+#[derive(Debug)]
 pub struct Message<'a> {
     msg: bus1_msg,
 
