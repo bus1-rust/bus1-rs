@@ -1,5 +1,7 @@
 # bus1-rs
 
+[![Build Status](https://travis-ci.org/bus1-rust/bus1-rs.svg?branch=master)](https://travis-ci.org/bus1-rust/bus1-rs)
+
 Wrapper around the bus1 IPC for Linux.
 
 This project is unstable and will change to match upstream bus1 changes.
